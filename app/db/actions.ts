@@ -50,8 +50,8 @@ export async function saveGuestbookEntry(formData: FormData) {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      from: 'hi@dantas15.com',
-      to: 'gustav0d@protonmail.com',
+      from: 'guestbook@dantas15.com',
+      to: 'me@dantas15.com',
       subject: 'New Guestbook Entry',
       html: `<p>Email: ${email}</p><p>Message: ${body}</p>`,
     }),
