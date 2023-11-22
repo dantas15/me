@@ -18,6 +18,7 @@ export const metadata: Metadata = {
     title: "gustavo dantas' digital garden",
     description: 'software engineer, writer and philosopher',
     url: webUrl,
+    images: [{ url: `${webUrl}/og-bg.png` }],
     siteName: "dantas' digital garden",
     locale: 'en_US',
     type: 'website',
