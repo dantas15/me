@@ -18,10 +18,14 @@ export async function generateMetadata({
 
   const {
     title,
-    publishedAt: publishedTime,
+    lastPublishedAt,
+    createdAt,
     summary: description,
     image,
   } = post.metadata;
+
+  const publishedTime = lastPublishedAt ?? createdAt;
+
   const ogImage = image ? `${webUrl}${image}` : `${webUrl}/og?title=${title}`;
 
   return {
@@ -52,9 +56,9 @@ function formatDate(date: string) {
   const currentDate = new Date();
   const targetDate = new Date(date);
 
-  const yearsAgo = currentDate.getFullYear() - targetDate.getFullYear();
-  const monthsAgo = currentDate.getMonth() - targetDate.getMonth();
-  const daysAgo = currentDate.getDate() - targetDate.getDate();
+  const yearsAgo = currentDate.getFullYear() - targetDate.getUTCFullYear();
+  const monthsAgo = currentDate.getMonth() - targetDate.getUTCMonth();
+  const daysAgo = currentDate.getDate() - targetDate.getUTCDate();
 
   let formattedDate = '';
 
@@ -69,6 +73,7 @@ function formatDate(date: string) {
   }
 
   const fullDate = targetDate.toLocaleString('en-us', {
+    timeZone: 'UTC',
     month: 'long',
     day: 'numeric',
     year: 'numeric',
@@ -78,11 +83,13 @@ function formatDate(date: string) {
 }
 
 export default function Blog({ params }) {
-  let post = getBlogPosts().find((post) => post.slug === params.slug);
+  const post = getBlogPosts().find((post) => post.slug === params.slug);
 
   if (!post) {
     notFound();
   }
+
+  const isDraft = !post.metadata.lastPublishedAt;
 
   return (
     <section>
@@ -94,8 +101,8 @@ export default function Blog({ params }) {
             '@context': 'https://schema.org',
             '@type': 'BlogPosting',
             headline: post.metadata.title,
-            datePublished: post.metadata.publishedAt,
-            dateModified: post.metadata.publishedAt,
+            datePublished: post.metadata.createdAt,
+            dateModified: post.metadata.lastPublishedAt,
             description: post.metadata.summary,
             image: post.metadata.image
               ? `${webUrl}${post.metadata.image}`
@@ -111,9 +118,27 @@ export default function Blog({ params }) {
       <h1 className="title font-medium text-2xl tracking-tighter max-w-[650px]">
         {post.metadata.title}
       </h1>
+
+      {isDraft && (
+        <div className="dark:bg-gray-100 dark:text-gray-900 px-4 py-2 my-4 rounded-md  text-gray-100 bg-gray-900">
+          <p>This post is a draft!</p>
+          <p>
+            You can contribute to this content{' '}
+            <a
+              className="underline"
+              href={`https://github.com/dantas15/me/blob/main/content/${post.slug}.mdx`}
+              target="_blank"
+            >
+              here
+            </a>
+            !
+          </p>
+        </div>
+      )}
+
       <div className="flex justify-between items-center mt-2 mb-8 text-sm max-w-[650px]">
         <p className="text-sm text-neutral-600 dark:text-neutral-400">
-          {formatDate(post.metadata.publishedAt)}
+          {formatDate(post.metadata.lastPublishedAt ?? post.metadata.createdAt)}
         </p>
         <Suspense fallback={<p className="h-5" />}>
           <Views slug={post.slug} />
@@ -130,6 +155,8 @@ let incrementViews = cache(increment);
 
 async function Views({ slug }: { slug: string }) {
   let views = await getViewsCount();
-  incrementViews(slug);
+  if (process.env.NODE_ENV !== 'development') {
+    incrementViews(slug);
+  }
   return <ViewCounter allViews={views} slug={slug} />;
 }

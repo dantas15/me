@@ -3,7 +3,8 @@ import path from 'path';
 
 type Metadata = {
   title: string;
-  publishedAt: string;
+  lastPublishedAt?: string;
+  createdAt: string;
   summary: string;
   image?: string;
 };
