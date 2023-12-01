@@ -56,9 +56,9 @@ function formatDate(date: string) {
   const currentDate = new Date();
   const targetDate = new Date(date);
 
-  const yearsAgo = currentDate.getFullYear() - targetDate.getFullYear();
-  const monthsAgo = currentDate.getMonth() - targetDate.getMonth();
-  const daysAgo = currentDate.getDate() - targetDate.getDate();
+  const yearsAgo = currentDate.getFullYear() - targetDate.getUTCFullYear();
+  const monthsAgo = currentDate.getMonth() - targetDate.getUTCMonth();
+  const daysAgo = currentDate.getDate() - targetDate.getUTCDate();
 
   let formattedDate = '';
 
@@ -73,6 +73,7 @@ function formatDate(date: string) {
   }
 
   const fullDate = targetDate.toLocaleString('en-us', {
+    timeZone: 'UTC',
     month: 'long',
     day: 'numeric',
     year: 'numeric',
@@ -155,7 +156,7 @@ let incrementViews = cache(increment);
 async function Views({ slug }: { slug: string }) {
   let views = await getViewsCount();
   if (process.env.NODE_ENV !== 'development') {
-  incrementViews(slug);
+    incrementViews(slug);
   }
   return <ViewCounter allViews={views} slug={slug} />;
 }
