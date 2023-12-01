@@ -18,10 +18,14 @@ export async function generateMetadata({
 
   const {
     title,
-    publishedAt: publishedTime,
+    lastPublishedAt,
+    createdAt,
     summary: description,
     image,
   } = post.metadata;
+
+  const publishedTime = lastPublishedAt ?? createdAt;
+
   const ogImage = image ? `${webUrl}${image}` : `${webUrl}/og?title=${title}`;
 
   return {
@@ -78,7 +82,7 @@ function formatDate(date: string) {
 }
 
 export default function Blog({ params }) {
-  let post = getBlogPosts().find((post) => post.slug === params.slug);
+  const post = getBlogPosts().find((post) => post.slug === params.slug);
 
   if (!post) {
     notFound();
@@ -94,8 +98,8 @@ export default function Blog({ params }) {
             '@context': 'https://schema.org',
             '@type': 'BlogPosting',
             headline: post.metadata.title,
-            datePublished: post.metadata.publishedAt,
-            dateModified: post.metadata.publishedAt,
+            datePublished: post.metadata.createdAt,
+            dateModified: post.metadata.lastPublishedAt,
             description: post.metadata.summary,
             image: post.metadata.image
               ? `${webUrl}${post.metadata.image}`
@@ -113,7 +117,7 @@ export default function Blog({ params }) {
       </h1>
       <div className="flex justify-between items-center mt-2 mb-8 text-sm max-w-[650px]">
         <p className="text-sm text-neutral-600 dark:text-neutral-400">
-          {formatDate(post.metadata.publishedAt)}
+          {formatDate(post.metadata.lastPublishedAt ?? post.metadata.createdAt)}
         </p>
         <Suspense fallback={<p className="h-5" />}>
           <Views slug={post.slug} />
