@@ -88,6 +88,8 @@ export default function Blog({ params }) {
     notFound();
   }
 
+  const isDraft = !post.metadata.lastPublishedAt;
+
   return (
     <section>
       <script
@@ -115,6 +117,24 @@ export default function Blog({ params }) {
       <h1 className="title font-medium text-2xl tracking-tighter max-w-[650px]">
         {post.metadata.title}
       </h1>
+
+      {isDraft && (
+        <div className="dark:bg-gray-100 dark:text-gray-900 px-4 py-2 my-4 rounded-md  text-gray-100 bg-gray-900">
+          <p>This post is a draft!</p>
+          <p>
+            You can contribute to this content{' '}
+            <a
+              className="underline"
+              href={`https://github.com/dantas15/me/blob/main/content/${post.slug}.mdx`}
+              target="_blank"
+            >
+              here
+            </a>
+            !
+          </p>
+        </div>
+      )}
+
       <div className="flex justify-between items-center mt-2 mb-8 text-sm max-w-[650px]">
         <p className="text-sm text-neutral-600 dark:text-neutral-400">
           {formatDate(post.metadata.lastPublishedAt ?? post.metadata.createdAt)}
