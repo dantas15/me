@@ -134,6 +134,8 @@ let incrementViews = cache(increment);
 
 async function Views({ slug }: { slug: string }) {
   let views = await getViewsCount();
+  if (process.env.NODE_ENV !== 'development') {
   incrementViews(slug);
+  }
   return <ViewCounter allViews={views} slug={slug} />;
 }
