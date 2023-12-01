@@ -1,7 +1,36 @@
 ---
 title: 'Hello, World!'
-publishedAt: '2023-01-01'
-summary: 'This is your first blog post.'
+lastPublishedAt: '2023-12-01'
+createdAt: '2023-12-01'
+summary: 'The first post of my personal blog!'
 ---
 
-Hello, World!
+Hey! This is the first post in this new blog (or maybe a [digital garden](/blog/digital-garden)?)
+
+I'm really excited to start writing about my experiences and thoughts (not only related to tech)!
+
+## The blog's first version
+
+Since I don't know what to start writing about, I'll write how I got started with this blog.
+First, I bootstraped the code with [leerob's](https://leerob.io). Yet, I made some [changes](https://github.com/dantas15/me/pull/1) for now:
+
+- added a few frontmatter fields:
+  - `createdAt`: the date the post was created
+  - `lastPublishedAt`: the date the post was last published. This is also useful to draft posts (which can be have contributions from other people)
+- added the possibility to have draft posts
+- fixed an issue with different timezones (I'm from Brazil - GMT-3 - and the dates were being displayed one day before)
+
+## What's new for me
+
+I already tried Next.js before, but it's one of the first time I am acutally using the [App Router](https://nextjs.org/docs/app).
+
+For hosting the app, I am using [Vercel](https://vercel.com), which is a great platform for hosting Next.js apps (and other stuff too), also, I am also using a PostgreSQL database as a storage for this project, it's being used to keep track of view counter in each post and for the guestbook!
+
+The [guestbook](/guestbook) is a page where people can login with your GitHub account and leave a message for me, it's a simple form that saves the message in the database and displays it in the page.
+
+## What's next?
+
+I have tried a bunch of times to start a blog and a [digital garden](https://github.com/dantas15/garden), but I never got to write more than 2 posts. This is a little different about my [DEV Community profile](https://dev.to/dantas), where I have made a few more posts.
+I guess my biggest issue is wanting to implement every funcionality I see online, something like [FOMO](https://en.wikipedia.org/wiki/Fear_of_missing_out), otherwise I don't feel like it's a good blog.
+
+But, this time, I'll try to keep it as simple as possible and try writing more.
