@@ -8,19 +8,14 @@ export default function Page() {
         hi, I'm gustavo dantas 👋
       </h1>
       <p className="prose prose-neutral dark:prose-invert">
-        I'm a future software engineer based in Brazil.
+        I'm a software developer based in Brazil.
       </p>
       <br />
       <p className="prose prose-neutral dark:prose-invert">
         <Link href="https://ufla.br/" target="_blank">
           UFLA
-        </Link>{' '}
-        B.Sc. Computer Science. currently <Link href="/work">working</Link> as a
-        Project Director at{' '}
-        <Link href="https://www.linkedin.com/company/compjunior/">
-          Comp Júnior
-        </Link>
-        .
+        </Link>,{' '}
+        B.Sc. Computer Science. Open to <Link href="/work">work</Link> on anything related to web technologies, especially with JavaScript.
       </p>
       <ul className="flex flex-col md:flex-row mt-8 space-x-0 md:space-x-4 space-y-2 md:space-y-0 font-sm text-neutral-600 dark:text-neutral-300">
         <li>
