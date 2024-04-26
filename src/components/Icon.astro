@@ -4,7 +4,7 @@ import { iconsPaths } from './iconsPaths';
 
 interface Props {
     icon: keyof typeof iconsPaths;
-    className?: string;
+    className?: string | string[];
     color?: string;
     gradient?: boolean;
     size?: string;
@@ -15,7 +15,7 @@ const iconPath = iconsPaths[icon];
 
 const attrs: HTMLAttributes<'svg'> = {};
 if (size) attrs.style = { '--size': size };
-if (className) attrs.class = className;
+if (className) attrs.class = typeof className === 'string' ? className : className.join(' ');
 
 const gradientId = 'icon-gradient-' + Math.round(Math.random() * 10e12).toString(36);
 ---
