@@ -29,6 +29,7 @@ interface Props {
 
 const { title, type } = Astro.props;
 const actualType = !type ? 'note' : type;
+const actualTitle = actualType.charAt(0).toUpperCase() + actualType.slice(1);
 
 const calloutBaseStyles = 'w-full p-1.5 text-zinc-50 rounded-sm border-2';
 
@@ -38,7 +39,7 @@ const customCalloutData = calloutTypesClassNames[actualType]();
 <aside class:list={[calloutBaseStyles, customCalloutData.styles]}>
     <div class="flex gap-2">
         <Icon icon={customCalloutData.icon} className="text-4xl" />
-        {title && <h6 class="text-xl self-center leading-tight font-sans font-medium sm:text-lg sm:leading-tight">{title}</h6>}
+        <h6 class="text-xl self-center leading-tight font-sans font-medium sm:text-lg sm:leading-tight">{actualTitle}</h6>
     </div>
     <div class="px-8">
         <p><slot /></p>
