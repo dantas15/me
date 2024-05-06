@@ -22,6 +22,15 @@
     },
     "typescript.tsdk": "node_modules/typescript/lib",
     "files.associations": {
-        "*.css": "tailwindcss",
+        "*.css": "tailwindcss"
+    },
+    "[mdx]": {
+        "editor.formatOnSave": false,
+        "editor.acceptSuggestionOnEnter": "off",
+        "editor.quickSuggestions": {
+            "other": false,
+            "comments": "off",
+            "strings": "on"
+        }
     }
 }
