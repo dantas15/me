@@ -39,7 +39,7 @@ export type SiteConfig = {
 
 const siteConfig: SiteConfig = {
     title: "dantas' place",
-    subtitle: 'my projects and ideias',
+    subtitle: 'my portfolio and blog',
     description: "Gustavo Dantas' portfolio and some writings",
     image: {
         src: '/web-preview.jpg',
@@ -89,7 +89,7 @@ const siteConfig: SiteConfig = {
     ],
     hero: {
         title: 'hey! nice seeing you here.',
-        text: 'I\'m Gustavo Dantas, a software developer based in Brazil 🇧🇷. B.Sc Computer Science student at <a target="blank" href="https://ufla.br">UFLA</a>. I\'m primarily driven into philosophy and professionally I focus on Software Development with a huge interest in diving into Software Architecture. <br />Anyways, I really like to think and write about what I\'m thinking so this digital place is where I share my thoughts online.',
+        text: "I'm Gustavo, welcome to my website!<br/><br/>This is where I showcase some personal projects and primarily share curated or raw thoughts and ideas.<br/><br/>I love writing about anything and I often do it in private. But, I found out that sharing knowledge and personal experiences can be powerful because it ultimately allows you to connect your thoughts and ideas with people.",
         // image: {
         //     src: '/hero.jpeg',
         //     alt: 'A person sitting at a desk in front of a computer'
@@ -101,7 +101,7 @@ const siteConfig: SiteConfig = {
             },
             {
                 text: 'star this repo on github',
-                href: 'https://github.com/dantas15/me.git'
+                href: 'https://github.com/dantas15/me'
             }
         ]
     },
