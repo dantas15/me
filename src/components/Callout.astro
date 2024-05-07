@@ -7,8 +7,7 @@ type CalloutReturnTypes = () => {
     icon: keyof typeof iconsPaths;
 };
 type CalloutTypes = {
-    note: CalloutReturnTypes;
-    warning: CalloutReturnTypes;
+    [key: string]: CalloutReturnTypes;
 };
 
 const calloutTypesClassNames: CalloutTypes = {
@@ -24,7 +23,8 @@ const calloutTypesClassNames: CalloutTypes = {
 
 interface Props {
     title?: string;
-    type?: keyof typeof calloutTypesClassNames;
+    type?: Extract<keyof typeof calloutTypesClassNames, string>;
+    // about Extract: https://stackoverflow.com/questions/51808160/keyof-inferring-string-number-when-key-is-only-a-string
 }
 
 const { title, type } = Astro.props;
