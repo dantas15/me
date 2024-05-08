@@ -74,7 +74,7 @@ Since I was using wired connection, I didn't need to setup anything, but, if it'
 
 Now it's time to check if everything is right running `timedatectl`.
 
-- You can list the timezones with
+- You can list the timezones with:
 
 ```shell
 timedatectl list-timezones
@@ -134,7 +134,7 @@ Assuming you're in fdisk:
   - Personally, I just create another partition with the rest of the available space (all defaults)
 - When you finish creating the partitions, type `w` to write changes to the disk
 
-Create a FAT 32 system on the EFI partition (in my casse it's `/dev/sda1`)
+Create a FAT 32 system on the EFI partition (in my casse it's `/dev/sda1`):
 
 ```bash
 mkfs.fat -F 32 /dev/sda1
@@ -142,13 +142,13 @@ mkfs.fat -F 32 /dev/sda1
 
 ## System encryption
 
-Initialize encryption on the Linux Filesystem partition. It'll prompt a password to encrypt your system.
+Initialize encryption on the Linux Filesystem partition. It'll prompt a password to encrypt your system:
 
 ```bash
 cryptsetup -y -v luksFormat /dev/sda2
 ```
 
-Map `/dev/sda2` to `/dev/mapper/root`
+Map `/dev/sda2` to `/dev/mapper/root`:
 
 ```bash
 cryptsetup open /dev/sda2 root
@@ -156,19 +156,19 @@ cryptsetup open /dev/sda2 root
 
 ## BTRFS parititioning and Swapfile
 
-Create BTRFS on the encrypted Linux Filesystem partition
+Create BTRFS on the encrypted Linux Filesystem partition:
 
 ```bash
 mkfs.btrfs /dev/mapper/root
 ```
 
-Now mount it
+Now mount it:
 
 ```bash
 mount /dev/mapper/root /mnt
 ```
 
-`cd` to /mnt and create the subvolumes [as recommended](https://wiki.archlinux.org/title/snapper#Suggested_filesystem_layout) for use with `snapper` (a program I found on Cody Hou's Arch installation, [reference](#reference) below)
+`cd` to `/mnt` and create the subvolumes [as recommended](https://wiki.archlinux.org/title/snapper#Suggested_filesystem_layout) for use with `snapper` (a program I found on Cody Hou's Arch installation, [reference](#reference) below):
 
 ```bash
 cd /mnt
@@ -179,7 +179,7 @@ btrfs subvolume create @var_log
 btrfs subvolume create @swap
 ```
 
-Unmount `root` and remount the subvolumes and the boot partition. [noatime](https://opensource.com/article/20/6/linux-noatime) is used for better performance [zstd](https://github.com/facebook/zstd) as file compression
+Unmount `root` and remount the subvolumes and the boot partition. [noatime](https://opensource.com/article/20/6/linux-noatime) is used for better performance [zstd](https://github.com/facebook/zstd) as file compression:
 
 ```bash
 cd
@@ -197,7 +197,7 @@ mount /dev/sda1 /mnt/boot
   Make sure the swap subvolume is not being snapshoted.
 </Callout>
 
-Create a [swap file](https://wiki.archlinux.org/title/Btrfs#Swap_file). Change the `count` parameter in order to specify the size of the swap file.
+Create a [swap file](https://wiki.archlinux.org/title/Btrfs#Swap_file). Change the `count` parameter in order to specify the size of the swap file:
 
 ```bash
 cd /mnt/swap
@@ -206,7 +206,7 @@ dd if=/dev/zero of=./swapfile bs=1M count=8192 status=progress
 chmod 0600 ./swapfile
 ```
 
-Now you can install the [essential packages](https://wiki.archlinux.org/title/Installation_guide#Install_essential_packages) in your system. (replace `intel-ucode` with `intel-ucode`if you're using an Intel processor)
+Now you can install the [essential packages](https://wiki.archlinux.org/title/Installation_guide#Install_essential_packages) in your system. (replace `intel-ucode` with `intel-ucode`if you're using an Intel processor):
 
 ```bash
 pacstap -K /mnt base base-devel linux linux-firmware amd-ucode vim git networkmanager btrfs-progs dosfstools e2fsprogs exfat-utils ntfs-3g smartmontools dialog man-db man-pages texinfo pacman-contrib
@@ -216,7 +216,7 @@ pacstap -K /mnt base base-devel linux linux-firmware amd-ucode vim git networkma
 
 ### Fstab
 
-Generate [fstab](https://wiki.archlinux.org/title/Fstab)
+Generate [fstab](https://wiki.archlinux.org/title/Fstab):
 
 ```bash
 genfstab -U /mnt >> /mnt/etc/fstab
@@ -224,7 +224,7 @@ genfstab -U /mnt >> /mnt/etc/fstab
 
 ### Chroot
 
-Change root into the system
+Change root into the system:
 
 ```bash
 arch-chroot /mnt
@@ -232,13 +232,13 @@ arch-chroot /mnt
 
 ### Time
 
-Set the time zone accordingly. You can look in /usr/share/zoneinfo for your region and city.
+Set the time zone accordingly (you can look in /usr/share/zoneinfo for your region and city):
 
 ```bash
 ln -sf /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
 ```
 
-Run `hwclock` to generate `/etc/adjtime`
+Run `hwclock` to generate `/etc/adjtime`:
 
 ```bash
 hwclock --systohc
@@ -246,8 +246,7 @@ hwclock --systohc
 
 ### Localization
 
-Edit `/etc/locale.gen` and uncomment the needed UTF-8 locales (In my case, I'll uncomment `en_US.UTF-8 UTF-8` and `pt_BR.UTF-8 UTF-8`)
-
+Edit `/etc/locale.gen` and uncomment the needed UTF-8 locales (In my case, I'll uncomment `en_US.UTF-8 UTF-8` and `pt_BR.UTF-8 UTF-8`):
 
 ```bash
 vim /etc/locale.gen
@@ -259,13 +258,13 @@ After you uncomment the locales, you have to generate the locales:
 locale-gen
 ```
 
-Now you can create `/etc/locale.conf` file 
+Now you can create `/etc/locale.conf` file:
 
 ```bash
 vim /etc/locale.conf
 ```
 
-And set the LANG variable accordingly
+And set the LANG variable accordingly:
 
 ```bash
 LANG=pt_BR.UTF-8
@@ -291,19 +290,19 @@ Now, in order to prevent software unsafely resolving localhost over the network 
 
 ### User configuration
 
-Create a root password
+Create a root password:
 
 ```bash
 passwd
 ```
 
-Create your user with administrative privileges (the `-s` can be omitted as bash is the default shell). In my case, my username will be `gus`
+Create your user with administrative privileges (the `-s` can be omitted as bash is the default shell). In my case, my username will be `gus`:
 
 ```bash
 useradd -m -G wheel,rfkill -s /bin/bash gus
 ```
 
-Specify the password for the created user
+Specify the password for the created user:
 
 ```bash
 passwd gus
@@ -315,7 +314,7 @@ In order to enable the recently created user to have administrative privileges (
 EDITOR=vim visudo
 ```
 
-If you want, you can specify the full user name with
+If you want, you can specify the full user name with:
 
 ```bash
 chfn -f "Gustavo Dantas" gus
@@ -331,7 +330,7 @@ Still in `/etc/mkinitcpio.conf`, make sure the `HOOKS` looks like the following
   The order of the hooks matter, so make sure `block` and `encrypt` are before `filesystems`
 </Callout>
 
-Regenerate `initramfs`
+Regenerate `initramfs`:
 
 ```bash
 mkinitcpio -P
@@ -345,13 +344,13 @@ You can use [grub](https://wiki.archlinux.org/title/GRUB) or [systemd](https://w
 pacman -S grub efibootmgr
 ```
 
-Generate the bootloader
+Generate the bootloader:
 
 ```bash
 grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
 ```
 
-Now you need to obtain the UUID of the partition the system was installed.
+Now you need to obtain the UUID of the partition the system was installed:
 
 ```bash
 blkid
@@ -361,13 +360,13 @@ blkid
   Use the UUID of the partiion itself (in my case it's `/dev/sda2`, or if you're using NVME it should be something like `/dev/nvme0n1p2)`
 </Callout>
 
-Edit `/etc/default/grub` and at the line beginning with `GRUB_CMDLINE_LINUX_DEFAULT`, insert at the end with a space after quiet. Replace the content of `[UUID]` with the correspondent UUID of your system partition.
+Edit `/etc/default/grub` and at the line beginning with `GRUB_CMDLINE_LINUX_DEFAULT`, insert at the end with a space after quiet. Replace the content of `[UUID]` with the correspondent UUID of your system partition:
 
 ```bash
 root=/dev/mapper/root cryptdevice=UUID=[UUID]:root 
 ```
 
-Regenerate `grub.cfg`
+Regenerate `grub.cfg`:
 
 ```bash
 grub-mkconfig -o /boot/grub/grub.cfg
@@ -404,7 +403,7 @@ You should be prompted to enter the password of the encrypted partition right be
 
 ## Snapshots
 
-Install `snapper`
+Install `snapper`:
 
 ```bash
 sudo pacman -S snapper
@@ -454,19 +453,19 @@ sudo mkdir /.snapshots
 sudo mount -a
 ```
 
-Now give the right read, write and execute permissions to the snapshots
+Now give the right read, write and execute permissions to the snapshots:
 
 ```bash
 sudo chmod 750 /.snapshots
 ```
 
-Add your user to `ALLOW_USERS="yourusername"` in the snapper config at `/etc/snapper/configs/root`. You can also change the frequency and the history listed on the snapper [wiki page](https://wiki.archlinux.org/title/snapper#Set_snapshot_limits)
+Add your user to `ALLOW_USERS="yourusername"` in the snapper config at `/etc/snapper/configs/root`. You can also change the frequency and the history listed on the snapper [wiki page](https://wiki.archlinux.org/title/snapper#Set_snapshot_limits):
 
 ```bash
 sudo vim /etc/snapper/configs/root
 ```
 
-Enable the snapper services
+Enable the snapper services:
 
 ```bash
 sudo systemctl enable --now snapper-timeline.timer
@@ -481,20 +480,20 @@ Even when I used Arch on WSL, I really liked [yay](https://github.com/Jguer/yay)
 
 But you can also choose another one (like [paru](https://aur.archlinux.org/packages/paru) which is written in Rust), or if you're really going in Arch Linux way, get familiar with the [manual build process](https://wiki.archlinux.org/title/Arch_User_Repository#Installing_and_upgrading_packages)
 
-Anyway, I'm installing `yay`. From the [docs](https://github.com/Jguer/yay?tab=readme-ov-file#installation)
+Anyway, I'm installing `yay`. From the [docs](https://github.com/Jguer/yay?tab=readme-ov-file#installation):
 
 ```bash
 pacman -S --needed git base-devel && git clone https://aur.archlinux.org/yay-bin.git && cd yay-bin && makepkg -si
 ```
 
-In order to take a snapshot after every single install with pacman so you can rever if an upgrade breaks something, we can use `snap-pac-grub`.
+In order to take a snapshot after every single install with pacman so you can revert if an upgrade breaks something, we can use `snap-pac-grub`.
 But, because of the way the partitions were configured, the `/boot` is not being snapshotted, so in order to copy the files of `/boot` on every Linux kernel upgrade, `rsync` will be installed.
 
 ```bash
 yay -S snap-pac-grub rsync
 ```
 
-There's also the possibility to enable booting the snapshots from `grub`. For that, in `/etc/mkinitcpio.conf` add `grub-btrfs-overlayfs` to the end of `HOOKS`. And don't forget to regenerate your `initramfs`
+There's also the possibility to enable booting the snapshots from `grub`. For that, in `/etc/mkinitcpio.conf` add `grub-btrfs-overlayfs` to the end of `HOOKS`. And don't forget to regenerate your `initramfs`:
 
 ```bash
 sudo mkinitcpio -P
@@ -554,7 +553,7 @@ Exec = /usr/bin/rsync -a --delete /boot /.bootbackup/postupdate
 
 Reboot the system.
 
-Now make an image for rollback to the system as it is in case something goes wrong in the near future
+Now make an image for rollback to the system as it is in case something goes wrong in the near future:
 
 ```bash
 sudo snapper -c root create --description “Clean BTRFS install with Snapper”
