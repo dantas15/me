@@ -35,7 +35,7 @@ const { title, type } = Astro.props;
 const actualType = !type ? 'note' : type;
 const actualTitle = !title ? actualType.charAt(0).toUpperCase() + actualType.slice(1) : title;
 
-const calloutBaseStyles = 'w-full p-1.5 text-zinc-50 rounded-sm border-2';
+const calloutBaseStyles = 'w-full p-1.5 text-main rounded-sm border-2';
 
 const customCalloutData = calloutTypesClassNames[actualType]();
 ---
