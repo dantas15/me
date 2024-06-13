@@ -1,15 +1,22 @@
 ---
-type Props = { date: Date };
+type Props = { date: Date; displayTime?: boolean };
 
-const { date } = Astro.props;
+const { date, displayTime } = Astro.props;
+const formattedDate = displayTime
+    ? date.toLocaleDateString('en-us', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: 'numeric'
+      })
+    : date.toLocaleDateString('en-us', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+      });
 ---
 
 <time datetime={date.toISOString()}>
-    {
-        date.toLocaleDateString('en-us', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        })
-    }
+    {formattedDate}
 </time>
