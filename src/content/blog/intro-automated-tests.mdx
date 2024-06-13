@@ -1,7 +1,8 @@
 ---
 title: Introduction to Automated Tests
-excerpt: What writing tests means and how to enhance your productivity and the assertiveness of your code.
+excerpt: Learn how to guarantee your code works as expected without having to test it manually everytime.
 publishDate: '2024-06-12T00:00:00-03:00'
+lastUpdatedAt: '2024-06-13T15:00:00-03:00'
 isFeatured: true
 seo:
   image: 
@@ -31,24 +32,28 @@ So how do you make sure it keeps working as usual? You test it. Manually. Again.
 
 Yes you will have to test it again, but it sucks right? Having to manually make a request and manually check if the information of the response and the database info are correct according to the request you sent.
 
-But besides the manual labor of manual tests, there's also another problem: How do you keep track of what you have to test, what's already tested and what need testing? Yes, you can write them down, make a checklist or whatever, but again, there's always the manual effort of having to go all the way through your checklist while testing.
-
 I got tired just by thinking about what I wrote in the last 2 paragraphs.
 
 With that in mind, I'll show you another way to assert that your code is still working.
 
 ## Automated tests
 
-Automated tests allows you to write code to test the code of your application. There are many ways software can be tested and you'll encounter many names, for example:
+Automated tests allows you to write code to test the code of your application. As a developer you might've already realized that the actual work of a developer involves automating repetitive tasks. You can think of automated tasks just as a way to automate all the repetitive and manual tests you do when you test it manually.
+
+There are many ways software can be tested and you'll encounter many names, for example:
 - when you're testing an isolated file or feature it's called [unit testing](https://aws.amazon.com/what-is/unit-testing/)
 - when you're testing multiple components that are integrated, it's called [integration testing](https://www.geeksforgeeks.org/software-engineering-integration-testing/)
 - when you're the whole system just like it'll be done in production (e.g. simulating user inputs, browser navigation), it's called end-to-end or [e2e testing](https://microsoft.github.io/code-with-engineering-playbook/automated-testing/e2e-testing/)
 
-There are lots of different types of tests and different definitions, but I'll let you dive deeper on yourself as you see fit. It's time to understand a more fundamental approach to writing automated tests.
+But, for purposes of better introducing you to a more fundamental approach of automated tests, I'll be demonstrating with unit tests.
 
-As a developer you might've already realized that the actual work of a deveoper involves automating repetitive tasks. You can think of automated tasks just as a way to automate all the repetitive and manual tests you do when you test it manually.
+Going back to automating stuff, have you asked yourself what exactly are you automating when writing tests?
 
-That means that based on a *specific environment* of your software, you *take action* just like the user would've and you *verify* that the code works as it's supposed to.
+Basically, the phrase you have to keep in mind when automating is the following:
+
+> Based on a **specific environment** of your software, you **take action** just like the user would have and you **verify** that the code works as it's supposed to.
+
+With that in mind, let's dive a bit deeper on the test structure.
 
 ## Test structure
 
@@ -127,15 +132,17 @@ If you haven't, let me clarify:
 2. **Act** accordingly to trigger actions expected, in the example above, we assign `calculator.multiply()` to `result`
 3. **Assert** everything works as expected, in the example above, we verify that `result` is equal to 20 with the `expect` function.
 
-## How it enhances your productivity?
-
-Well... Automated tests are... automated?
-
-Just kidding. But yeah, that's true, you no longer have to debug your code and provide all the inputs and all the configuration every time you have to test it.
+Now you no longer have to debug your code and provide all the inputs and all the configuration every time you have to test it.
 
 And most importantly, you have solid proof that it works the way you expected. If the code needs more funcionality or it has a new bug? You fix the bug or implement the new funcionality and create a test for it, so the next time it won't appear.
 
 Besides that, some people argue that it's even better to write the test suite first, then the code itself, that's the idea behind [Test-Driven-Development](https://martinfowler.com/bliki/TestDrivenDevelopment.html).
+
+### A word on productivity
+
+Of course, there'll be times when you just need to ship faster and writing tests for you `sum(a, b)` function is definitely not worth it. But let this talk of "To Test or Not To Test" for some other time. For now we shall praise the automation of a repetitive task!
+
+But if you're really interested in productivity, [ping me](/contact) and we can talk more about it (and maybe you can help me write more about it!)
 
 ### A word on assertiveness
 
@@ -146,8 +153,6 @@ Code assertiveness enchances because understanding your code becomes a consequen
 ## Conclusion
 
 I truly hope grasped the core idea of automated tests and how powerful and efficient they can be.
-
-Of course, there'll be times when you just need to ship faster and writing tests for you `sum(a, b)` function is definitely not worth it. But let this talk of "To Test or Not To Test" for some other time (maybe a future blog post?).
 
 Make sure to [contact me](/contact) if you have any suggestions, recommendations, tips, questions or if you just want to have philosophical conversations!
 
