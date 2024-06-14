@@ -42,8 +42,8 @@ const siteConfig: SiteConfig = {
     subtitle: 'my portfolio and blog',
     description: "Gustavo Dantas' portfolio and some writings",
     image: {
-        src: '/web-preview.jpg',
-        alt: 'Preview of my website displaying dark and light mode'
+        src: '/web-preview.png',
+        alt: ''
     },
     headerNavLinks: [
         {
