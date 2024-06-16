@@ -9,6 +9,6 @@ Thank you for reaching out! Whether you have a question, a suggestion, or just w
 
 - email me at gusdantas15 at gmail dot com
 - ping me on [twitter/x](https://twitter.com/gusdantas/)
-- connect with me on [linkedin](https://www.linkedin.com/in/gustavo-dantas-galote/)
+- connect with me on [linkedin](https://www.linkedin.com/in/dantas15/)
 
 - or check [all my links](https://bento.me/dantas)
