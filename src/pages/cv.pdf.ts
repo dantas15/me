@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 
 import handlebars from 'handlebars';
-import chromium from '@sparticuz/chromium-min';
+import chromium from '@sparticuz/chromium';
 import { DateTime } from 'luxon';
 
 import type { APIRoute } from 'astro';
@@ -19,7 +19,7 @@ export const GET: APIRoute = async () => {
         browser = await puppeteer.launch({
             args: chromium.args,
             defaultViewport: chromium.defaultViewport,
-            executablePath: await chromium.executablePath('https://github.com/Sparticuz/chromium/releases/download/v123.0.1/chromium-v123.0.1-pack.tar'),
+            executablePath: await chromium.executablePath(),
             headless: chromium.headless
         });
     } else {
