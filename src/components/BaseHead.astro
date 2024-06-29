@@ -1,5 +1,5 @@
 ---
-import siteConfig from '../data/site-config';
+import { siteConfig } from '../data/site-config';
 import '../styles/global.css';
 
 export type Props = {
@@ -41,7 +41,10 @@ function formatCanonicalURL(url: string | URL) {
 <meta name="generator" content={Astro.generator} />
 
 <!-- Current fonts -->
-<link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,401,500,700&f[]=crimson-pro@200,201,300,301,400,401,500,501,600,601,700,701,800,801,900,901&display=swap" rel="stylesheet">
+<link
+    href="https://api.fontshare.com/v2/css?f[]=satoshi@400,401,500,700&f[]=crimson-pro@200,201,300,301,400,401,500,501,600,601,700,701,800,801,900,901&display=swap"
+    rel="stylesheet"
+/>
 
 <!-- Previous fonts -->
 <!--
