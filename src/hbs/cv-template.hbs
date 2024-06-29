@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{{name}} - {{role}}</title>
+    <link href="https://api.fontshare.com/v2/css?f[]=crimson-pro@400,700&display=swap" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Crimson Pro', 'Times New Roman', Times, serif;
+            font-size: small;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            grid-gap: 20px;
+            padding: 20px;
+        }
+
+        .left,
+        .right {
+            width: 100%;
+        }
+
+        h1,
+        h2 {
+            margin: 0 0 10px 0;
+        }
+
+        h2 {
+            font-size: 1.2em;
+            border-bottom: 1px solid #000;
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tag {
+            background-color: #e0e0e0;
+            border-radius: 15px;
+            padding: 5px 10px;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="left">
+            <h1>{{name}}</h1>
+            <h2>{{role}}</h2>
+            <p>{{excerpt}}</p>
+
+            <h2>Contact me</h2>
+            <ul>
+                {{#each contacts}}
+                <li>{{this.text}}: {{this.href}}</li>
+                {{/each}}
+            </ul>
+
+            <h2>My links</h2>
+            <ul>
+                {{#each socialLinks}}
+                <li><a href="{{this.text}}">{{this.href}}</a></li>
+                {{/each}}
+            </ul>
+
+            <h2>Skills</h2>
+            {{#each skills}}
+            <h3>{{this.section}}</h3>
+            <div class="tags">
+                {{#each this.tags}}
+                <span class="tag">{{this}}</span>
+                {{/each}}
+            </div>
+            {{/each}}
+        </div>
+
+        <div class="right">
+            <h2>Work Experience</h2>
+            {{#each workExperience}}
+            <div>
+                <h3>{{role}} - {{location}}</h3>
+                {{formatDate startedAt}} - {{formatDate finishedAt}}
+                <p>{{description}}</p>
+            </div>
+            {{/each}}
+
+            <h2>Education</h2>
+            {{#each education}}
+            <div>
+                <h3>{{title}}</h3>
+                {{formatDate startedAt}} - {{formatDate finishedAt}}
+                <p>{{description}}</p>
+            </div>
+            {{/each}}
+
+            <h2>Languages</h2>
+            <ul>
+                {{#each languages}}
+                <li>{{language}}: {{level}}</li>
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+</body>
+
+</html>
