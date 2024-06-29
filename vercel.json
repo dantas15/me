@@ -1,3 +1,0 @@
-{
-    "installCommand": "apt update && apt install -y libnss3 && pnpm install"
-}
