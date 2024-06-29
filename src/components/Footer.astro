@@ -1,8 +1,11 @@
 ---
 import { siteConfig } from '../data/site-config';
+import { getBaseUrl } from '../utils/data-utils';
 
 const socialLinks = siteConfig.socialLinks || [];
 const navLinks = siteConfig.footerNavLinks || [];
+
+const baseUrl = getBaseUrl();
 ---
 
 <footer class="w-full max-w-3xl mx-auto pt-12 pb-10 sm:pt-24 sm:pb-14">
@@ -26,16 +29,18 @@ const navLinks = siteConfig.footerNavLinks || [];
         {
             socialLinks.length > 0 && (
                 <div class="flex flex-wrap gap-x-4 gap-y-1">
-                    {socialLinks.map((link) => (
-                        <a
-                            class="inline-flex items-center justify-center text-sm hover:underline hover:underline-offset-2"
-                            href={link.href}
-                            target="_blank"
-                            rel="noopener noreferer"
-                        >
-                            {link.text}
-                        </a>
-                    ))}
+                    {socialLinks
+                        .filter((link) => !link.href.startsWith(baseUrl))
+                        .map((link) => (
+                            <a
+                                class="inline-flex items-center justify-center text-sm hover:underline hover:underline-offset-2"
+                                href={link.href}
+                                target="_blank"
+                                rel="noopener noreferer"
+                            >
+                                {link.text}
+                            </a>
+                        ))}
                 </div>
             )
         }

@@ -1,6 +1,10 @@
 import { type CollectionEntry } from 'astro:content';
 import { slugify } from './common-utils';
 
+export function getBaseUrl() {
+    return import.meta.env.SITE ?? 'https://dantas15.com';
+}
+
 export function sortItemsByDateDesc(itemA: CollectionEntry<'blog' | 'projects'>, itemB: CollectionEntry<'blog' | 'projects'>) {
     return new Date(itemB.data.publishDate).getTime() - new Date(itemA.data.publishDate).getTime();
 }
