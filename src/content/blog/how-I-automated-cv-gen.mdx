@@ -1,0 +1,130 @@
+---
+title: How I automated CV generation on my blog
+excerpt: I talk about how I fixed a problem I had when automating the generation of my CV on my website
+publishDate: '2024-07-04'
+isFeatured: false
+seo:
+  image: 
+    src: '/blog/how-I-automated-cv-gen.png'
+    alt: 'A person is handing over a document to another person, who is reaching out to receive it. The image captures the transaction from a close-up perspective, focusing on the hands and the document. The background is bright and softly lit, suggesting a professional or office environment.'
+tags:
+  - blog
+---
+
+![A person is handing over a document to another person, who is reaching out to receive it. The image captures the transaction from a close-up perspective, focusing on the hands and the document. The background is bright and softly lit, suggesting a professional or office environment.](/blog/how-I-automated-cv-gen.png)
+
+I'm in the moment in my life where I'm trying to automate stuff that I consider boring. Recently I just automated the creation of my resumé [on my website](https://dantas15.com/cv.pdf).
+
+## The Problem
+
+For some time I would just download my [LinkedIn profile as `.pdf`](https://www.linkedin.com/help/linkedin/answer/a541960/como-salvar-um-perfil-em-um-formato-pdf?lang=en-US) and apply. But I had some issues that really bothered me, like the skills displays messing up everytime I changed something on my profile and that feeling that recruiters might think I'm being too careless to use a generic tool to generate my CV. 
+
+Then I tried improving things: I started using a [template on Figma](https://www.figma.com/community/file/1296192470925545513/curriculum-vitae).
+
+I must confess I was really satisfied with the design, but with the work I had when I had to change the information was not worth it. Besides, the PDF exported by Figma was so big I always had to compress it before using it.
+
+So I decided I would build my own, but without having to worry about clicking layers or external tools.
+
+## The Solution
+
+### How to generate the PDF
+
+I did some search and found out a good tool to generate a PDF server side: [puppeteer](https://pptr.dev/). And I chose [handlebars](https://handlebarsjs.com/) to generate the HTML since I already knew how to use it before (as I write this, I'm looking for [other alternatives](https://docs.astro.build/en/reference/container-reference/#rendertostring), but haven't implemented yet, [ping me](/contact) if you would like to help)
+
+### Astro
+
+Ok, but how to do it using [astro](https://astro.build) (the tool I use for my blog)?
+
+Well, for that, I [static file endpoint](https://docs.astro.build/en/guides/endpoints/#static-file-endpoints) that would be responsible for fetching/generating the PDF at build time (so I don't have to manually build it).
+
+In [`cv.pdf.ts`](https://github.com/dantas15/me/blob/main/src/pages/cv.pdf.ts):
+
+```ts
+import { readFileSync } from 'node:fs';
+
+import handlebars from 'handlebars';
+import { DateTime } from 'luxon';
+
+import { personalData } from '../data/personal';
+
+import type { APIRoute } from 'astro';
+
+
+export const GET: APIRoute = async () => {
+
+  const htmlTemplate = readFileSync('src/hbs/cv-template.hbs', 'utf8');
+  // Generating the HTML
+  const template = handlebars.compile(htmlTemplate);
+  const html = template(personalData);
+
+  // Connecting to puppeteer in order to create the PDF
+  const browser = await puppeteer.launch({
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+  });
+  const page = await browser.newPage();
+  await page.setContent(html);
+  const pdf = await page.pdf({ format: 'a4' });
+  await browser.close();
+  return new Response(pdf, { headers: { 'Content-Type': 'application/pdf' } });
+};
+```
+
+The code above works wonders on development! 
+
+## Time to ship - another problem
+
+As soon as pushed my changes that triggered vercel build, I realized that the build failed since chromium could not be installed (puppeteer runs a version of it).
+
+Turns out vercel had limitations with the free plan I'm using, so I couldn't use puppeteer.
+
+## Another Solution
+
+In order to fix that, I decided to create my own API that renders the PDF for me, it's a small project I created just for it, it's [open sourced](https://github.com/dantas15/pptr-html2pdf).
+
+Then, going back to my blog code, I created a function to fetch the PDF from the generated HTML:
+
+```ts
+type PDFResponse = {
+    pdf: string;
+};
+
+async function fetchPdf(html: string): Promise<Buffer> {
+    const response = await fetch(import.meta.env.PDF_ENDPOINT, {
+        headers: { 'Content-Type': 'application/json', authorization: import.meta.env.PDF_GEN_API_KEY },
+        method: 'POST',
+        body: JSON.stringify({ html })
+    });
+
+    if (!response.ok) {
+        throw new Error(`PDF Api not working: ${(await response.json()).error}`);
+    }
+    const data: PDFResponse = await response.json();
+
+    return Buffer.from(data.pdf, 'utf-8');
+}
+```
+
+Then I fixed the `GET` route:
+
+```ts
+export const GET: APIRoute = async () => {
+    const templateHtml = readFileSync('src/hbs/cv-template.hbs', 'utf8');
+    const template = handlebars.compile(templateHtml);
+    const html = template(personalData);
+    const pdf = await fetchPdf(html);
+
+    return new Response(pdf, { headers: { 'Content-Type': 'application/pdf' } });
+};
+```
+
+There you go!
+
+## Conclusion
+
+You can find all the code on my [repo](https://github.com/dantas15/me)
+
+Make sure to [contact me](/contact) if you have any suggestions, recommendations, tips, questions or if you just want to have philosophical conversations!
+
+## Reference
+
+- [Photo by Andrea Piacquadio](https://www.pexels.com/photo/job-applicant-passing-her-documents-3760072/)
