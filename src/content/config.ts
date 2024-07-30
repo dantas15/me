@@ -15,17 +15,6 @@ const seoSchema = z.object({
     pageType: z.enum(['website', 'article']).default('website')
 });
 
-const notes = defineCollection({
-    schema: z.object({
-        title: z.string(),
-        aliases: z.array(z.string().optional()).default([]),
-        excerpt: z.string().optional(),
-        createdAt: z.coerce.date(),
-        tags: tagsSchema,
-        seo: seoSchema.optional()
-    })
-});
-
 const blog = defineCollection({
     schema: z.object({
         title: z.string(),
