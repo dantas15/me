@@ -27,7 +27,7 @@ type Props = { page: Page<CollectionEntry<'blog'>> };
 const { page } = Astro.props;
 const blog = page.data;
 const params = Astro.params;
-const allPosts = await getBlogCollection;
+const allPosts = await getBlogCollection();
 const allTags = getAllTags(allPosts);
 const currentTag = allTags.find((tag) => {
     return tag.slug === params.slug;
