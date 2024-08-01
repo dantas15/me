@@ -2,6 +2,7 @@
 title: What You Need to Know About GraphQL
 excerpt: "What are the main differences between API REST? Understand queries, mutations and a brief introduction about Relay and what makes a Relay compliant server"
 publishDate: '2024-07-23T00:00:00-03:00'
+draft: true
 tags:
   - api
   - graphql
