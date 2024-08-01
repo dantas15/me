@@ -40,8 +40,8 @@ const personalData: PersonalData = {
     ],
     socialLinks: [
         {
-            text: 'about me',
-            href: 'https://dantas15.com/about'
+            text: 'my blog',
+            href: 'https://dantas15.com/blog'
         },
         {
             text: 'github',
