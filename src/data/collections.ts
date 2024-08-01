@@ -1,7 +1,7 @@
 import { getCollection } from 'astro:content';
 
-export async function getBlogCollection() {
-    const blogPosts = (await getCollection('blog')).filter((blog) => !blog.data.draft);
+export async function getBlogCollection(withDrafts = false) {
+    const blogPosts = (await getCollection('blog')).filter((blog) => withDrafts || !blog.data.draft);
     return blogPosts;
 }
 
