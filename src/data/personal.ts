@@ -3,13 +3,13 @@ import type { Link } from './site-config';
 type WorkExperience = {
     role: string;
     description: string;
-    location: string;
+    location?: string;
     startedAt: string;
     finishedAt: string;
 };
 type Education = {
     title: string;
-    description: string;
+    description?: string;
     startedAt: string;
     finishedAt: string;
 };
@@ -59,31 +59,22 @@ const personalData: PersonalData = {
     workExperience: [
         {
             role: 'Quality Manager at Comp Júnior',
-            description:
-                "I continued what captivated me from the previous position, working on more automated and optimized ways to improve the quality of the company's software, as well as reinforcing the internal culture of code review and internal documentation. Among the ways to improve quality, I worked on bringing CI/CD tools into the context of our applications, mainly involving GitHub Actions and Docker. Additionally, I also focus on content for future members, the biggest example being the refactoring of Comp Júnior's public digital library, Athena, where I played a fundamental role both operationally and in content for the Infrastructure track.",
-            location: 'Lavras, Minas Gerais, Brazil',
+            description: `I continued doing what captivated me after my last role, I'm working on more automated and optimized ways to improve the quality of the company's software, as well as reinforcing the internal culture of code review and internal documentation. Among the ways to improve quality, I'm working on bringing CI/CD tools to the context of our applications, primarily involving GitHub Actions and Docker.
+                Additionally, I also concern myself with content for future members, the greatest example of which is the refactoring of Comp Júnior's public digital library, Athena, in which I played a key role, both in development and in making content within the Infrastructure track (https://athena.compjunior.com.br/trilhas/infra/01-introducao/).`,
             startedAt: '2024-01',
             finishedAt: '2024-06'
         },
         {
             role: 'Project Director at Comp Júnior',
-            description:
-                'I was mainly responsible for the strategic planning of the projects sector, identifying the feasibility of new projects and bringing new technologies into Comp Júnior through training and documentation. I structured a technical documentation and internal management platform for the projects sector. Additionally, I organized the squads for project development while reinforcing the quality of deliveries, mainly through Code Review. I was also responsible for ensuring the end-to-end functionality of broadcasts and the website for CompWeek 2023-2, a 100% online and free IT event organized entirely by Comp Júnior.',
-            location: 'Lavras, Minas Gerais, Brazil',
+            description: `I was primarily responsible for the strategic planning of the projects department, identifying the feasibility of new projects, and bringing new technologies into Comp Júnior through training and documentation. I structured a platform for technical documentation and internal management/direction of the projects department.
+Additionally, I organize the squads for project development while reinforcing the quality of deliveries, mainly through Code Review.`,
             startedAt: '2023-08',
             finishedAt: '2023-12'
         },
         {
-            role: 'Full Stack Developer at Comp Júnior',
-            description: 'I worked as a full-stack developer, contributing to ongoing projects for clients.',
-            location: 'Lavras, Minas Gerais, Brazil',
-            startedAt: '2023-07',
-            finishedAt: '2023-08'
-        },
-        {
             role: 'IT Technician at Infoluck Sistemas',
-            description:
-                'I was responsible for structuring the migration of a legacy system in Delphi to the web. I played a crucial role in selecting technologies for the web system, especially on the front-end. I worked with TypeScript, React.js, MantineUI as a component library, React Context, Zod for validation, and TanStack Query for API requests, mainly the internal PHP API. It was my first practical experience after completing my technical course, and I felt that I was able to apply many theoretical concepts from there, such as design patterns, database modeling, state management with React Context, and web development in general.',
+            description: `I was responsible for structuring the migration of a legacy system in Delphi to the web.  It was my first practical experience after completing my technical course, and I felt that I was able to apply many theoretical concepts from there, such as SQL and web development in general.
+            I worked with Typescript, React.js, MantineUI as a component library, React Context, Zod for validation, TanStack Query for API requests, mainly the internal PHP API.`,
             location: 'Amparo, São Paulo, Brazil',
             startedAt: '2022-01',
             finishedAt: '2022-12'
@@ -92,13 +83,11 @@ const personalData: PersonalData = {
     education: [
         {
             title: "Bachelor's Degree in Computer Science",
-            description: 'Studied various topics including software development and design patterns.',
             startedAt: '2022-10',
             finishedAt: '2026-12'
         },
         {
             title: 'Technical Course in System Development',
-            description: 'Studied software development, MySQL, and various other competencies.',
             startedAt: '2019-01',
             finishedAt: '2021-12'
         }

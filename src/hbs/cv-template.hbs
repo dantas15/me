@@ -96,7 +96,7 @@
             <h2>Work Experience</h2>
             {{#each workExperience}}
             <div>
-                <h3>{{role}} - {{location}}</h3>
+                <h3>{{role}} {{#if location }}- {{location}} {{/if}}</h3>
                 {{formatDate startedAt}} - {{formatDate finishedAt}}
                 <p>{{description}}</p>
             </div>
@@ -107,7 +107,7 @@
             <div>
                 <h3>{{title}}</h3>
                 {{formatDate startedAt}} - {{formatDate finishedAt}}
-                <p>{{description}}</p>
+                {{#if description }}<p>{{description}}</p> {{/if}}
             </div>
             {{/each}}
 
