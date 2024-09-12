@@ -15,7 +15,7 @@ type Education = {
 };
 type Language = { language: string; level: string };
 type Skill = { section: string; tags: string[] };
-type PersonalData = {
+export type PersonalData = {
     name: string;
     role: string;
     excerpt: string;
