@@ -119,15 +119,19 @@ export const GET: APIRoute = async () => {
 };
 ```
 
-There you go! Here's how the CV is generated (you can also see it on [dantas15.com/cv.pdf](https://dantas15.com/cv.pdf)):
+And that worked.
 
-![Print of my resume](/blog/how-I-automated-cv-gen/cv-print.png)
+## I changed. Again
+
+I was not satisfied with using handlebars and I found out [ReactPDF](https://react-pdf.org/).
+
+I could make it work by using `renderToFile` on `cv.pdf.ts`. I got stuck in a problem with fonts where the font would not change from the default one, no matter what I did, so I left it.
+
+Yes, I abandoned all of this and I am currently just using a nice overleaf template.
 
 ## Conclusion
 
-You can find all the code on my [repo](https://github.com/dantas15/me)
-
-Make sure to [contact me](/contact) if you have any suggestions, recommendations, tips, questions or if you just want to have philosophical conversations!
+Do you have any recommendations? Make sure you [contact me](/contact).
 
 ## Reference
 
