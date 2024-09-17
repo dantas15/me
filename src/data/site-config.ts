@@ -1,5 +1,3 @@
-import { personalData } from './personal';
-
 export type Image = {
     src: string;
     alt?: string;
@@ -63,10 +61,6 @@ const siteConfig: SiteConfig = {
         {
             text: 'tags',
             href: '/tags'
-        },
-        {
-            text: 'download my cv',
-            href: '/cv.pdf'
         }
     ],
     footerNavLinks: [
@@ -83,7 +77,20 @@ const siteConfig: SiteConfig = {
             href: '/terms'
         }
     ],
-    socialLinks: personalData.socialLinks,
+    socialLinks: [
+        {
+            text: 'github',
+            href: 'https://github.com/dantas15'
+        },
+        {
+            text: 'linkedin',
+            href: 'https://www.linkedin.com/in/dantas15/'
+        },
+        {
+            text: 'twitter/X',
+            href: 'https://twitter.com/gusdantas'
+        }
+    ],
     hero: {
         title: 'hey! nice seeing you here.',
         text: "I'm Gustavo, welcome to my website!<br/><br/>This is where I showcase some personal projects and primarily share curated or raw thoughts and ideas.<br/><br/>I love writing about anything and I often do it in private. But, I found out that sharing knowledge and personal experiences can be powerful because it ultimately allows you to connect your thoughts and ideas with people.",
